@@ -3,7 +3,7 @@
 
 // Site configuration
 define('SITE_NAME', 'Cambodia Heritage');
-define('SITE_URL', 'http://localhost/cambodia-heritage'); // Change to your actual URL
+define('SITE_URL', 'http://localhost/cambodia-heritage/Internet-Technology-Server-Side'); // Change to your actual URL
 
 // Database configuration
 define('DB_HOST', 'localhost');

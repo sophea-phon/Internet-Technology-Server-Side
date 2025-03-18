@@ -58,14 +58,14 @@ function upload_image($file, $directory = 'uploads/') {
 }
 
 // Check if user is logged in
-function is_logged_in() {
-    return isset($_SESSION['user_id']);
-}
+// function is_logged_in() {
+//     return isset($_SESSION['user_id']);
+// }
 
 // Check if user is admin
-function is_admin() {
-    return isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin';
-}
+// function is_admin() {
+//     return isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin';
+// }
 
 // Redirect to URL
 function redirect($url) {

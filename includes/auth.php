@@ -173,7 +173,7 @@ function is_logged_in() {
  * @return bool True if admin, false otherwise
  */
 function is_admin() {
-    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+    return isset($_SESSION['user_role']) || $_SESSION['user_role'] === 'admin';
 }
 
 /**
@@ -202,7 +202,7 @@ function require_login($redirect = null) {
         }
         
         // Redirect to login page
-        header('Location: ' . BASE_URL . '/login.php');
+        header('Location: ' . BASE_URL . '/admin/login.php');
         exit;
     }
 }
@@ -268,7 +268,7 @@ function logout_user($redirect = true) {
  * 
  * @return array|bool User data if logged in, false otherwise
  */
-function get_current_user() {
+function get_custom_current_user() {
     if (!is_logged_in()) {
         return false;
     }
