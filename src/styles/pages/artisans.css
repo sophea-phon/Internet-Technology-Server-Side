@@ -1,0 +1,107 @@
+/* Artisans Page Styles */
+
+/* Hero Section */
+.artisans-hero {
+  position: relative;
+  height: 50vh;
+  min-height: 40rem;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../../assets/images/artisans-hero.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 7rem;
+}
+
+.artisans-hero h1 {
+  font-size: var(--font-size-5xl);
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.artisans-hero p {
+  font-size: var(--font-size-xl);
+  max-width: 60rem;
+  margin: 0 auto;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Artisans List Section */
+.artisans-list {
+  padding: var(--spacing-4xl) 0;
+}
+
+.artisan-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.artisan-card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.artisan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.artisan-img {
+  height: 22rem;
+  overflow: hidden;
+}
+
+.artisan-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.artisan-card:hover .artisan-img img {
+  transform: scale(1.05);
+}
+
+.artisan-info {
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.artisan-info h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.artisan-info p {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+  .artisans-hero {
+    height: 40vh;
+    min-height: 30rem;
+  }
+
+  .artisans-hero h1 {
+    font-size: var(--font-size-4xl);
+  }
+
+  .artisans-hero p {
+    font-size: var(--font-size-lg);
+  }
+
+  .artisan-cards {
+    grid-template-columns: 1fr;
+  }
+}

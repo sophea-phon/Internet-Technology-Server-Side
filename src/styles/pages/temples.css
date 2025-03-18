@@ -1,0 +1,107 @@
+/* Temples Page Styles */
+
+/* Hero Section */
+.temples-hero {
+  position: relative;
+  height: 50vh;
+  min-height: 40rem;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../../assets/images/temples-hero.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 7rem;
+}
+
+.temples-hero h1 {
+  font-size: var(--font-size-5xl);
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.temples-hero p {
+  font-size: var(--font-size-xl);
+  max-width: 60rem;
+  margin: 0 auto;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Temples List Section */
+.temples-list {
+  padding: var(--spacing-4xl) 0;
+}
+
+.temple-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.temple-card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.temple-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.temple-img {
+  height: 22rem;
+  overflow: hidden;
+}
+
+.temple-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.temple-card:hover .temple-img img {
+  transform: scale(1.05);
+}
+
+.temple-info {
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.temple-info h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.temple-info p {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+  .temples-hero {
+    height: 40vh;
+    min-height: 30rem;
+  }
+
+  .temples-hero h1 {
+    font-size: var(--font-size-4xl);
+  }
+
+  .temples-hero p {
+    font-size: var(--font-size-lg);
+  }
+
+  .temple-cards {
+    grid-template-columns: 1fr;
+  }
+}

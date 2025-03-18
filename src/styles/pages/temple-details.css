@@ -1,0 +1,130 @@
+/* Temple Details Page Styles */
+
+/* Hero Section */
+.temple-details-hero {
+  position: relative;
+  height: 40vh;
+  min-height: 30rem;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../../assets/images/temple-details-hero.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 7rem;
+}
+
+.temple-details-hero h1 {
+  font-size: var(--font-size-5xl);
+  margin-bottom: var(--spacing-sm);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.temple-details-hero p {
+  font-size: var(--font-size-lg);
+  max-width: 60rem;
+  margin: 0 auto;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Temple Details Section */
+.temple-details {
+  padding: var(--spacing-4xl) 0;
+}
+
+.temple-details-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-2xl);
+  align-items: center;
+}
+
+.temple-details-text {
+  max-width: 60rem;
+}
+
+.temple-details-text h2 {
+  margin-bottom: var(--spacing-md);
+}
+
+.temple-details-text p {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text-light);
+}
+
+.temple-details-image {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.temple-details-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Gallery Section */
+.gallery-section {
+  background-color: var(--color-background-alt);
+  padding: var(--spacing-4xl) 0;
+}
+
+.gallery-section h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.gallery-item {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform var(--transition-normal);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .temple-details-hero {
+    height: 30vh;
+    min-height: 25rem;
+  }
+
+  .temple-details-hero h1 {
+    font-size: var(--font-size-4xl);
+  }
+
+  .temple-details-hero p {
+    font-size: var(--font-size-md);
+  }
+
+  .temple-details-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+}

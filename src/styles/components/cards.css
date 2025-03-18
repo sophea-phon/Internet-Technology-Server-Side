@@ -1,0 +1,74 @@
+/* Cards */
+
+.temple-cards,
+.artisan-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.temple-card,
+.artisan-card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.temple-card:hover,
+.artisan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.temple-img,
+.artisan-img {
+  height: 22rem;
+  overflow: hidden;
+}
+
+.temple-img img,
+.artisan-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.temple-card:hover .temple-img img,
+.artisan-card:hover .artisan-img img {
+  transform: scale(1.05);
+}
+
+.temple-info,
+.artisan-info {
+  padding: var(--spacing-lg);
+}
+
+.temple-info h3,
+.artisan-info h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.temple-info p,
+.artisan-info p {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
+}
+
+.view-all {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .temple-cards,
+  .artisan-cards {
+    grid-template-columns: 1fr;
+  }
+}

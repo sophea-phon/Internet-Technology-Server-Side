@@ -1,0 +1,149 @@
+/* About Page Styles */
+
+.about-hero {
+  position: relative;
+  height: 40vh;
+  min-height: 30rem;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../../assets/images/about-hero.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 7rem;
+}
+
+.about-hero h1 {
+  font-size: var(--font-size-4xl);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.mission-section {
+  text-align: center;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.mission-section p {
+  font-size: var(--font-size-lg);
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3xl);
+  align-items: center;
+}
+
+.about-image {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.about-image::before {
+  content: "";
+  position: absolute;
+  top: -2rem;
+  left: -2rem;
+  width: 10rem;
+  height: 10rem;
+  border-top: 5px solid var(--color-primary);
+  border-left: 5px solid var(--color-primary);
+  z-index: var(--z-below);
+}
+
+.about-image::after {
+  content: "";
+  position: absolute;
+  bottom: -2rem;
+  right: -2rem;
+  width: 10rem;
+  height: 10rem;
+  border-bottom: 5px solid var(--color-primary);
+  border-right: 5px solid var(--color-primary);
+  z-index: var(--z-below);
+}
+
+.team-section {
+  background-color: var(--color-background-alt);
+}
+
+.team-members {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-2xl);
+}
+
+.team-member {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal);
+}
+
+.team-member:hover {
+  transform: translateY(-5px);
+}
+
+.team-member-img {
+  height: 25rem;
+  overflow: hidden;
+}
+
+.team-member-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.team-member:hover .team-member-img img {
+  transform: scale(1.05);
+}
+
+.team-member-info {
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.team-member-info h3 {
+  margin-bottom: var(--spacing-xs);
+}
+
+.team-member-info p {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-md);
+}
+
+.team-member-social {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+.team-member-social a {
+  color: var(--color-text-light);
+  transition: color var(--transition-fast);
+}
+
+.team-member-social a:hover {
+  color: var(--color-primary);
+}
+
+@media (max-width: 992px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .about-image {
+    order: -1;
+  }
+}
