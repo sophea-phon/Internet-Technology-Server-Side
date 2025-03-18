@@ -24,7 +24,7 @@
     <header class="header">
       <div class="header-container">
         <div class="logo">
-          <a href="../../index.html">
+          <a href="../../index.php">
             <img
               src="../../assets/images/logo.png"
               alt="Cambodia Heritage Logo"
@@ -34,19 +34,19 @@
         <nav class="navbar">
           <ul class="nav-menu">
             <li class="nav-item">
-              <a href="../../index.html" class="nav-link">Home</a>
+              <a href="../../index.php" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-              <a href="temples.html" class="nav-link">Temples</a>
+              <a href="temples.php" class="nav-link">Temples</a>
             </li>
             <li class="nav-item">
-              <a href="artisans.html" class="nav-link active">Local Artisans</a>
+              <a href="artisans.php" class="nav-link active">Local Artisans</a>
             </li>
             <li class="nav-item">
-              <a href="about.html" class="nav-link">About</a>
+              <a href="about.php" class="nav-link">About</a>
             </li>
             <li class="nav-item">
-              <a href="contact.html" class="nav-link">Contact</a>
+              <a href="contact.php" class="nav-link">Contact</a>
             </li>
           </ul>
           <div class="hamburger">
@@ -83,7 +83,7 @@
               <div class="artisan-info">
                 <h3>Traditional Silk Weaving</h3>
                 <p>Discover the ancient art of Cambodian silk weaving.</p>
-                <a href="artisan-details.html?id=1" class="btn btn-outline"
+                <a href="artisan-details.php?id=1" class="btn btn-outline"
                   >Learn More</a
                 >
               </div>
@@ -101,7 +101,7 @@
                   Learn about the skilled artisans of traditional Khmer stone
                   carving.
                 </p>
-                <a href="artisan-details.html?id=2" class="btn btn-outline"
+                <a href="artisan-details.php?id=2" class="btn btn-outline"
                   >Learn More</a
                 >
               </div>
@@ -125,11 +125,11 @@
           <div class="footer-links">
             <h3>Quick Links</h3>
             <ul>
-              <li><a href="../../index.html">Home</a></li>
-              <li><a href="temples.html">Temples</a></li>
-              <li><a href="artisans.html">Local Artisans</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="../../index.php">Home</a></li>
+              <li><a href="temples.php">Temples</a></li>
+              <li><a href="artisans.php">Local Artisans</a></li>
+              <li><a href="about.php">About</a></li>
+              <li><a href="contact.php">Contact</a></li>
             </ul>
           </div>
           <div class="footer-contact">

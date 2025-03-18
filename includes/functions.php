@@ -47,11 +47,22 @@ function upload_image($file, $directory = 'uploads/') {
             $new_filename = uniqid() . '.' . $file_extension;
             $upload_path = BASE_PATH . $directory . $new_filename;
             
+            // Check if directory exists, if not create it
+            if (!is_dir(BASE_PATH . $directory)) {
+                mkdir(BASE_PATH . $directory, 0755, true);
+            }
+            
             // Move the uploaded file
             if (move_uploaded_file($file['tmp_name'], $upload_path)) {
                 return $directory . $new_filename;
+            } else {
+                error_log("Failed to move uploaded file to $upload_path");
             }
+        } else {
+            error_log("File extension not allowed: $file_extension");
         }
+    } else {
+        error_log("File upload error: " . $file['error']);
     }
     
     return false;
