@@ -11,23 +11,33 @@ require_once '../includes/functions.php';
 // Require admin login
 require_admin();
 
+// Database connection
+$db = new Database();
+
 // Handle form submission for creating/updating temples
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = clean_input($_POST['name']);
     $location = clean_input($_POST['location']);
     $description = clean_input($_POST['description']);
     $history = clean_input($_POST['history']);
-    $featured_image = upload_image($_FILES['featured_image']);
+    $featured_image = !empty($_FILES['featured_image']['name']) ? upload_image($_FILES['featured_image']) : '';
 
-    if (isset($_POST['temple_id'])) {
+    if (isset($_POST['temple_id']) && $_POST['temple_id'] != '') {
         // Update existing temple
         $temple_id = clean_input($_POST['temple_id']);
-        $db->query("UPDATE temples SET name = :name, location = :location, description = :description, history = :history, featured_image = :featured_image, updated_at = NOW() WHERE id = :temple_id");
+        $query = "UPDATE temples SET name = :name, location = :location, description = :description, history = :history, updated_at = NOW()";
+        if ($featured_image != '') {
+            $query .= ", featured_image = :featured_image";
+        }
+        $query .= " WHERE id = :temple_id";
+        $db->query($query);
         $db->bind(':name', $name);
         $db->bind(':location', $location);
         $db->bind(':description', $description);
         $db->bind(':history', $history);
-        $db->bind(':featured_image', $featured_image);
+        if ($featured_image != '') {
+            $db->bind(':featured_image', $featured_image);
+        }
         $db->bind(':temple_id', $temple_id);
     } else {
         // Create new temple
@@ -60,7 +70,7 @@ if (isset($_GET['delete'])) {
 
 // Fetch all temples
 $db->query("SELECT * FROM temples ORDER BY created_at DESC");
-$temples = $db->resultset();
+$temples = $db->resultSet();
 ?>
 
 <!DOCTYPE html>
