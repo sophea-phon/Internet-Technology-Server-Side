@@ -28,5 +28,7 @@ define('SESSION_NAME', 'cambodia_heritage_session');
 define('SESSION_LIFETIME', 3600); // 1 hour
 
 // Initialize session
-session_name(SESSION_NAME);
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_name(SESSION_NAME);
+    session_start();
+}

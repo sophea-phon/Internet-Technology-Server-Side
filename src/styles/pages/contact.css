@@ -46,6 +46,7 @@
   box-shadow: var(--shadow-md);
   text-align: center;
   transition: transform var(--transition-normal);
+  overflow: hidden;
 }
 
 .contact-card:hover {

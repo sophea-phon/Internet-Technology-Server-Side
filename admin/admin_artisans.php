@@ -17,30 +17,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $craft_type = clean_input($_POST['craft_type']);
     $location = clean_input($_POST['location']);
     $bio = clean_input($_POST['bio']);
-    $featured_image = upload_image($_FILES['featured_image']);
     $contact_info = clean_input($_POST['contact_info']);
+    
+    // Check if image upload is successful
+    $featured_image = null;
+    if (!empty($_FILES['featured_image']['name'])) {
+        $featured_image = upload_image($_FILES['featured_image']);
+        if ($featured_image === false) {
+            flash_message('Error uploading image. Please try again.', 'danger');
+            header('Location: admin_artisans.php');
+            exit;
+        }
+    }
 
-    if (isset($_POST['artisan_id'])) {
+    if (isset($_POST['artisan_id']) && !empty($_POST['artisan_id'])) {
         // Update existing artisan
         $artisan_id = clean_input($_POST['artisan_id']);
-        $db->query("UPDATE artisans SET name = :name, craft_type = :craft_type, location = :location, bio = :bio, featured_image = :featured_image, contact_info = :contact_info, updated_at = NOW() WHERE id = :artisan_id");
-        $db->bind(':name', $name);
-        $db->bind(':craft_type', $craft_type);
-        $db->bind(':location', $location);
-        $db->bind(':bio', $bio);
-        $db->bind(':featured_image', $featured_image);
-        $db->bind(':contact_info', $contact_info);
+        if ($featured_image) {
+            $db->query("UPDATE artisans SET name = :name, craft_type = :craft_type, location = :location, bio = :bio, featured_image = :featured_image, contact_info = :contact_info, updated_at = NOW() WHERE id = :artisan_id");
+            $db->bind(':featured_image', $featured_image);
+        } else {
+            $db->query("UPDATE artisans SET name = :name, craft_type = :craft_type, location = :location, bio = :bio, contact_info = :contact_info, updated_at = NOW() WHERE id = :artisan_id");
+        }
         $db->bind(':artisan_id', $artisan_id);
     } else {
         // Create new artisan
         $db->query("INSERT INTO artisans (name, craft_type, location, bio, featured_image, contact_info, created_at, updated_at) VALUES (:name, :craft_type, :location, :bio, :featured_image, :contact_info, NOW(), NOW())");
-        $db->bind(':name', $name);
-        $db->bind(':craft_type', $craft_type);
-        $db->bind(':location', $location);
-        $db->bind(':bio', $bio);
         $db->bind(':featured_image', $featured_image);
-        $db->bind(':contact_info', $contact_info);
     }
+
+    $db->bind(':name', $name);
+    $db->bind(':craft_type', $craft_type);
+    $db->bind(':location', $location);
+    $db->bind(':bio', $bio);
+    $db->bind(':contact_info', $contact_info);
 
     if ($db->execute()) {
         flash_message('Artisan saved successfully.', 'success');
@@ -83,6 +93,7 @@ $artisans = $db->resultset();
                 <li><a href="admin_posts.php">Manage Posts</a></li>
                 <li><a href="admin_temples.php">Manage Temples</a></li>
                 <li><a href="admin_artisans.php">Manage Artisans</a></li>
+                <li><a href="admin_users.php">Manage Users</a></li>
                 <li><a href="admin_settings.php">Settings</a></li>
                 <li><a href="../logout.php">Logout</a></li>
             </ul>

@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = clean_input($_POST['status']);
     $author_id = $_SESSION['user_id'];
 
-    if (isset($_POST['post_id'])) {
+    if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
         // Update existing post
         $post_id = clean_input($_POST['post_id']);
         $db->query("UPDATE posts SET title = :title, content = :content, status = :status, updated_at = NOW() WHERE id = :post_id");
@@ -39,6 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         flash_message('Error saving post. Please try again.', 'danger');
     }
+    header('Location: admin_posts.php');
+    exit;
 }
 
 // Handle delete request
@@ -51,6 +53,8 @@ if (isset($_GET['delete'])) {
     } else {
         flash_message('Error deleting post. Please try again.', 'danger');
     }
+    header('Location: admin_posts.php');
+    exit;
 }
 
 // Fetch all posts
@@ -75,8 +79,9 @@ $posts = $db->resultset();
                 <li><a href="admin_posts.php">Manage Posts</a></li>
                 <li><a href="admin_temples.php">Manage Temples</a></li>
                 <li><a href="admin_artisans.php">Manage Artisans</a></li>
+                <li><a href="admin_users.php">Manage Users</a></li>
                 <li><a href="admin_settings.php">Settings</a></li>
-                <li><a href="logout.php">Logout</a></li>
+                <li><a href="../logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>

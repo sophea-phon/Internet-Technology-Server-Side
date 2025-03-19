@@ -1,3 +1,16 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
+
+require_once 'config/database.php';
+
+// Initialize Database Connection
+$db = new Database();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +29,7 @@
         <div class="header-container">
             <div class="logo">
                 <a href="index.php">
-                    <img src="assets/images/logo.png" alt="Cambodia Heritage Logo" />
+                   <h4>Cambodia Heritage</h4>
                 </a>
             </div>
             <nav class="navbar">
@@ -31,11 +44,26 @@
                         <a href="src/pages/artisans.php" class="nav-link">Local Artisans</a>
                     </li>
                     <li class="nav-item">
+                        <a href="src/pages/news.php" class="nav-link">News</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="src/pages/about.php" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
                         <a href="src/pages/contact.php" class="nav-link">Contact</a>
                     </li>
+                    <?php if (isset($_SESSION['user_username'])): ?>
+                        <li class="nav-item">
+                            <a href="src/pages/profile.php" class="nav-link">Welcome, <?php echo $_SESSION['user_username']; ?></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="src/pages/logout.php" class="nav-link">Logout</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a href="/admin/login.php" class="nav-link">Login</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
                 <div class="hamburger">
                     <span class="bar"></span>
@@ -66,8 +94,6 @@
                 <div class="temple-cards">
                     <?php
                     // Fetch temples from the database
-                    require_once 'config/database.php';
-                    $db = new Database();
                     $db->query("SELECT * FROM temples");
                     $temples = $db->resultSet();
 
@@ -113,7 +139,7 @@
                                     </div>
                                     <div class="artisan-info">
                                         <h3>' . $artisan["name"] . '</h3>
-                                        <p>' . $artisan["description"] . '</p>
+                                        <p>' . $artisan["bio"] . '</p>
                                         <a href="src/pages/artisan-details.php?id=' . $artisan["id"] . '" class="btn btn-outline">Meet Artisans</a>
                                     </div>
                                   </div>';

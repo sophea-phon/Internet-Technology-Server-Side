@@ -48,8 +48,9 @@ $footer_text = get_setting('footer_text');
                 <li><a href="admin_posts.php">Manage Posts</a></li>
                 <li><a href="admin_temples.php">Manage Temples</a></li>
                 <li><a href="admin_artisans.php">Manage Artisans</a></li>
+                <li><a href="admin_users.php">Manage Users</a></li>
                 <li><a href="admin_settings.php">Settings</a></li>
-                <li><a href="logout.php">Logout</a></li>
+                <li><a href="../logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>
