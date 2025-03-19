@@ -67,7 +67,8 @@ $artisans = $db->resultSet();
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="../../assets/images/logo.png" alt="Cambodia Heritage Logo" />
+                    <!-- <img src="../../assets/images/logo.png" alt="Cambodia Heritage Logo" /> -->
+                    <h3>Cambodia Heritage</h3>
                     <p>Exploring and preserving Cambodia's rich cultural heritage.</p>
                 </div>
                 <div class="footer-links">

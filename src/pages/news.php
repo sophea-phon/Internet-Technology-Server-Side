@@ -6,6 +6,13 @@ error_reporting(E_ALL);
 require_once '../../config/config.php';
 require_once '../../config/database.php';
 require_once '../../includes/functions.php';
+
+// Initialize Database Connection
+$db = new Database();
+
+// Fetch all news/posts
+$db->query("SELECT * FROM posts ORDER BY created_at DESC");
+$posts = $db->resultSet();
 ?>
 
 <!DOCTYPE html>
@@ -13,8 +20,8 @@ require_once '../../includes/functions.php';
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Detailed information about Cambodia's local artisans and their crafts" />
-    <title>Artisan Details - Cambodia Heritage</title>
+    <meta name="description" content="Stay updated with the latest news and updates from Cambodia Heritage" />
+    <title>News - Cambodia Heritage</title>
     <link rel="stylesheet" href="../styles/main.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -25,51 +32,32 @@ require_once '../../includes/functions.php';
     <?php include '../includes/header.php'; ?>
 
     <main>
-        <!-- Artisan Details Hero Section -->
-        <section class="artisan-details-hero">
+        <!-- News Hero Section -->
+        <section class="news-hero">
             <div class="container">
-                <h1>Artisan Name</h1>
-                <p>Location or Specialty</p>
+                <h1>Latest News and Updates</h1>
+                <p>Stay informed with the latest happenings and updates from Cambodia Heritage</p>
             </div>
         </section>
 
-        <!-- Artisan Details Section -->
-        <section class="artisan-details">
+        <!-- News List Section -->
+        <section class="news-list">
             <div class="container">
-                <div class="artisan-details-content">
-                    <div class="artisan-details-text">
-                        <h2>About the Artisan</h2>
-                        <p>
-                            Detailed information about the artisan, including their
-                            background, skills, and the crafts they specialize in.
-                        </p>
-                        <p>
-                            Additional details about their techniques, materials used, and
-                            any notable achievements or contributions.
-                        </p>
+                <div class="news-cards">
+                    <?php foreach ($posts as $post): ?>
+                    <div class="news-card">
+                        <div class="news-img">
+                            <!-- <img src="../../<?php echo $post['featured_image']; ?>" alt="<?php echo $post['title']; ?>" /> -->
+                            <!-- Debugging: Output image path -->
+                            <!-- <p>Image Path: ../../<?php echo $post['featured_image']; ?></p> -->
+                        </div>
+                        <div class="news-info">
+                            <h3><?php echo $post['title']; ?></h3>
+                            <p><?php echo substr($post['content'], 0, 100); ?>...</p>
+                            <a href="post-details.php?id=<?php echo $post['id']; ?>" class="btn btn-outline">Read More</a>
+                        </div>
                     </div>
-                    <div class="artisan-details-image">
-                        <img src="../../assets/images/artisan-detail.jpg" alt="Artisan Image" />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Gallery Section -->
-        <section class="gallery-section">
-            <div class="container">
-                <h2>Gallery</h2>
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img src="../../assets/images/gallery-image-4.jpg" alt="Gallery Image 1" />
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../../assets/images/gallery-image-5.jpg" alt="Gallery Image 2" />
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../../assets/images/gallery-image-6.jpg" alt="Gallery Image 3" />
-                    </div>
-                    <!-- Add more gallery items as needed -->
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>
