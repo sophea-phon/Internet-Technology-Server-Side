@@ -6,7 +6,7 @@
   height: 80vh;
   min-height: 60rem;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../../assets/images/hero-bg.jpg");
+    url("../../../assets/gallery/angkor/angkor-wat-cambodia.jpg");
   background-size: cover;
   background-position: center;
   color: white;
@@ -49,7 +49,7 @@
 /* Testimonials */
 .testimonials {
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("../../assets/images/testimonial-bg.jpg");
+    url("../../../assets/gallery/angkor/angkor-wat-historic-temple-siem-reap-cambodia.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
