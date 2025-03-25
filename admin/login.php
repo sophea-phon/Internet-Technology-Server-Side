@@ -18,21 +18,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db->bind(':username', $username);
 
     $user = $db->single();
-
-    if ($user && password_verify($password, $user['password'])) {
-        // Set session
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_username'] = $user['username'];
-        $_SESSION['user_email'] = $user['email'];
-        $_SESSION['user_role'] = $user['role'];
-        $_SESSION['logged_in'] = true;
-
-        // Redirect to admin dashboard
-        header('Location: admin_dashboard.php');
+    if(login_user($username,$password)){
+        header('location: index');
         exit;
-    } else {
+    }else{
         $error_message = 'Invalid username or password.';
     }
+    // if ($user && password_verify($password, $user['password'])) {
+    //     // Set session
+    //     $_SESSION['user_id'] = $user['id'];
+    //     $_SESSION['user_username'] = $user['username'];
+    //     $_SESSION['user_email'] = $user['email'];
+    //     $_SESSION['user_role'] = $user['role'];
+    //     $_SESSION['logged_in'] = true;
+    //     echo var_dump($user);
+
+    //     // Redirect to admin dashboard
+    //     header('Location: index');
+    //     exit;
+    // } else {
+    //     $error_message = 'Invalid username or password.';
+    // }
+    
 }
 ?>
 

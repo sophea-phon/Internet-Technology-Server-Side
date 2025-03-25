@@ -1,15 +1,15 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
-require_once '../config/config.php';
-require_once '../includes/auth.php';
-require_once '../includes/functions.php';
+// require_once '../config/config.php';
+// require_once '../includes/auth.php';
+// require_once '../includes/functions.php';
 
 // Require admin login
-require_admin();
+// require_admin();
 
 // Handle form submission for creating/updating artisans
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -53,10 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db->bind(':contact_info', $contact_info);
 
     if ($db->execute()) {
-        flash_message('Artisan saved successfully.', 'success');
+        header('location: ?page=artisans&status=success');
     } else {
-        flash_message('Error saving artisan. Please try again.', 'danger');
+        header('location: ?page=artisans&status=error_create');
     }
+    exit;
 }
 
 // Handle delete request
@@ -65,10 +66,13 @@ if (isset($_GET['delete'])) {
     $db->query("DELETE FROM artisans WHERE id = :artisan_id");
     $db->bind(':artisan_id', $artisan_id);
     if ($db->execute()) {
-        flash_message('Artisan deleted successfully.', 'success');
+        header('location: ?page=artisans&status=delete');
+        
     } else {
-        flash_message('Error deleting artisan. Please try again.', 'danger');
+        header('location: ?page=artisans&status=error_delete');
+        
     }
+    exit;
 }
 
 // Fetch all artisans
@@ -76,33 +80,9 @@ $db->query("SELECT * FROM artisans ORDER BY created_at DESC");
 $artisans = $db->resultset();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Artisans</title>
-    <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body>
-    <header>
-        <h1>Manage Artisans</h1>
-        <nav>
-            <ul>
-                <li><a href="admin_dashboard.php">Home</a></li>
-                <li><a href="admin_posts.php">Manage Posts</a></li>
-                <li><a href="admin_temples.php">Manage Temples</a></li>
-                <li><a href="admin_artisans.php">Manage Artisans</a></li>
-                <li><a href="admin_users.php">Manage Users</a></li>
-                <li><a href="admin_settings.php">Settings</a></li>
-                <li><a href="../logout.php">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
         <h2>Create/Edit Artisan</h2>
-        <?php echo flash_message(); ?>
-        <form action="admin_artisans.php" method="post" enctype="multipart/form-data">
+        <?php include '../includes/status.php';?>
+        <form method="post" enctype="multipart/form-data">
             <input type="hidden" name="artisan_id" id="artisan_id">
             <div>
                 <label for="name">Name:</label>
@@ -150,25 +130,10 @@ $artisans = $db->resultset();
                         <td><?php echo $artisan['craft_type']; ?></td>
                         <td><?php echo $artisan['location']; ?></td>
                         <td>
-                            <a href="admin_artisans.php?edit=<?php echo $artisan['id']; ?>">Edit</a>
-                            <a href="admin_artisans.php?delete=<?php echo $artisan['id']; ?>" onclick="return confirm('Are you sure you want to delete this artisan?');">Delete</a>
+                            <a href="?page=artisans&edit=<?php echo $artisan['id']; ?>">Edit</a>
+                            <a href="?page=artisans&delete=<?php echo $artisan['id']; ?>" onclick="return confirm('Are you sure you want to delete this artisan?');">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </main>
-    <script>
-        // Populate form for editing
-        <?php if (isset($_GET['edit'])): ?>
-            var artisan = <?php echo json_encode($db->single("SELECT * FROM artisans WHERE id = :artisan_id", [':artisan_id' => clean_input($_GET['edit'])])); ?>;
-            document.getElementById('artisan_id').value = artisan.id;
-            document.getElementById('name').value = artisan.name;
-            document.getElementById('craft_type').value = artisan.craft_type;
-            document.getElementById('location').value = artisan.location;
-            document.getElementById('bio').value = artisan.bio;
-            document.getElementById('contact_info').value = artisan.contact_info;
-        <?php endif; ?>
-    </script>
-</body>
-</html>

@@ -1,15 +1,16 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
-require_once '../config/config.php';
-require_once '../includes/auth.php';
-require_once '../includes/functions.php';
+// require_once '../config/config.php';
+// require_once '../includes/auth.php';
+// require_once '../includes/functions.php';
 
 // Require admin login
-require_admin();
-
+// require_admin();
+$db->query("SELECT COUNT(*) AS count FROM users WHERE role='admin'");
+$users_count = $db->single()['count'];
 // Handle form submission for creating/updating users
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = clean_input($_POST['username']);
@@ -36,13 +37,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db->bind(':username', $username);
     $db->bind(':email', $email);
     $db->bind(':role', $role);
-
-    if ($db->execute()) {
-        flash_message('User saved successfully.', 'success');
-    } else {
-        flash_message('Error saving user. Please try again.', 'danger');
+    try{
+        if ($db->execute()) {
+            header('location: ?page=users&status=success');
+        } else {
+            header('location: ?page=users&status=error_create');
+        }
+    }catch(PDOException $e){
+        if ($e->errorInfo[1] == 1062) {
+            header('location: ?page=users&status=duplicate');
+        }
     }
-    header('Location: admin_users.php');
+    
+    //header('Location: admin_users.php');
     exit;
 }
 
@@ -52,46 +59,28 @@ if (isset($_GET['delete'])) {
     $db->query("DELETE FROM users WHERE id = :user_id");
     $db->bind(':user_id', $user_id);
     if ($db->execute()) {
-        flash_message('User deleted successfully.', 'success');
+        header('location: ?page=users&status=delete');
     } else {
-        flash_message('Error deleting user. Please try again.', 'danger');
+        header('location: ?page=users&status=error_delete');
     }
-    header('Location: admin_users.php');
+    //header('Location: admin_users.php');
     exit;
 }
 
 // Fetch all users
-$db->query("SELECT * FROM users ORDER BY created_at DESC");
-$users = $db->resultset();
+try{
+    $db->query("SELECT * FROM users ORDER BY created_at DESC");
+    $users = $db->resultset();
+}catch(PDOException $e){
+    echo "error";
+}
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users</title>
-    <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body>
-    <header>
-        <h1>Manage Users</h1>
-        <nav>
-            <ul>
-                <li><a href="admin_dashboard.php">Home</a></li>
-                <li><a href="admin_posts.php">Manage Posts</a></li>
-                <li><a href="admin_temples.php">Manage Temples</a></li>
-                <li><a href="admin_artisans.php">Manage Artisans</a></li>
-                <li><a href="admin_users.php">Manage Users</a></li>
-                <li><a href="admin_settings.php">Settings</a></li>
-                <li><a href="../logout.php">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
+
         <h2>Create/Edit User</h2>
-        <?php echo flash_message(); ?>
-        <form action="admin_users.php" method="post">
+        <?php include '../includes/status.php' ?>
+        <form method="post">
             <input type="hidden" name="user_id" id="user_id">
             <div>
                 <label for="username">Username:</label>
@@ -134,9 +123,11 @@ $users = $db->resultset();
                         <td><?php echo $user['email']; ?></td>
                         <td><?php echo ucfirst($user['role']); ?></td>
                         <td>
-                            <a href="admin_users.php?edit=<?php echo $user['id']; ?>">Edit</a>
-                            <a href="admin_users.php?delete=<?php echo $user['id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
-                        </td>
+                            <a href="?page=users&edit=<?php echo $user['id']; ?>">Edit</a>
+                            <?php if ($users_count >= 1  && is_admin() && $_SESSION['user_id'] != $user['id']): ?> 
+                                <a href="?page=users&delete=<?php echo $user['id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                            <?php endif;?>
+                            </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

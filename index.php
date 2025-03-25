@@ -57,11 +57,11 @@ $db = new Database();
                             <a href="src/pages/profile.php" class="nav-link">Welcome, <?php echo $_SESSION['user_username']; ?></a>
                         </li>
                         <li class="nav-item">
-                            <a href="src/pages/logout.php" class="nav-link">Logout</a>
+                            <a href="admin/logout.php" class="nav-link">Logout</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a href="/admin/login.php" class="nav-link">Login</a>
+                            <a href="admin/login.php" class="nav-link">Login</a>
                         </li>
                     <?php endif; ?>
                 </ul>

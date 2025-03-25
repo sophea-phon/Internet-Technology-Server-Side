@@ -173,7 +173,8 @@ function is_logged_in() {
  * @return bool True if admin, false otherwise
  */
 function is_admin() {
-    return isset($_SESSION['user_role']) || $_SESSION['user_role'] === 'admin';
+    //return isset($_SESSION['user_role']) || $_SESSION['user_role'] === 'admin';
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 }
 
 /**
@@ -184,6 +185,11 @@ function is_admin() {
 function is_editor() {
     return isset($_SESSION['user_role']) && 
           ($_SESSION['user_role'] === 'editor' || $_SESSION['user_role'] === 'admin');
+}
+
+function is_user() {
+    return isset($_SESSION['user_role']) && 
+          ($_SESSION['user_role'] === 'user');
 }
 
 /**
