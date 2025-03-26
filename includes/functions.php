@@ -123,3 +123,16 @@ function update_setting($key, $value) {
     
     return $db->execute();
 }
+
+// Create site setting
+// Update site setting
+function create_setting($key, $value) {
+    global $db;
+    
+    $db->query("INSERT INTO `settings`(`setting_key`, `setting_value`) 
+    VALUES (:key,:value)");
+    $db->bind(':key', $key);
+    $db->bind(':value', $value);
+    
+    return $db->execute();
+}

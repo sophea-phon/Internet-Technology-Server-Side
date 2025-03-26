@@ -184,7 +184,7 @@ function is_admin() {
  */
 function is_editor() {
     return isset($_SESSION['user_role']) && 
-          ($_SESSION['user_role'] === 'editor' || $_SESSION['user_role'] === 'admin');
+          ($_SESSION['user_role'] === 'editor');
 }
 
 function is_user() {
@@ -208,7 +208,7 @@ function require_login($redirect = null) {
         }
         
         // Redirect to login page
-        header('Location: ' . BASE_URL . '/admin/login.php');
+        header('Location: ' . BASE_URL . '/admin/login');
         exit;
     }
 }
@@ -219,11 +219,11 @@ function require_login($redirect = null) {
  */
 function require_admin() {
     require_login();
-    
+    exit;
     if (!is_admin()) {
         // Not an admin, redirect to home
         set_flash_message('You do not have permission to access that page.', 'danger');
-        header('Location: ' . BASE_URL . '/index.php');
+        header('Location: ' . BASE_URL . '/index?page=home');
         exit;
     }
 }

@@ -93,7 +93,8 @@ try{
             <div>
                 <label for="role">Role:</label>
                 <select id="role" name="role" required>
-                    <option value="user">User</option>
+                    <!-- <option value="user">User</option> -->
+                    <option value="editor">Editor</option>
                     <option value="admin">Admin</option>
                 </select>
             </div>
@@ -132,16 +133,4 @@ try{
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </main>
-    <script>
-        // Populate form for editing
-        <?php if (isset($_GET['edit'])): ?>
-            var user = <?php echo json_encode($db->single("SELECT * FROM users WHERE id = :user_id", [':user_id' => clean_input($_GET['edit'])])); ?>;
-            document.getElementById('user_id').value = user.id;
-            document.getElementById('username').value = user.username;
-            document.getElementById('email').value = user.email;
-            document.getElementById('role').value = user.role;
-        <?php endif; ?>
-    </script>
-</body>
-</html>
+   

@@ -8,16 +8,16 @@ require_once '../includes/auth.php';
 require_once '../includes/functions.php';
 
 // Require admin login
-//require_admin();
-
-
+// require_admin();
+require_login();
 $validatePage = array(
     'dashboard' => 'admin_dashboard',
     'posts' => 'admin_posts',
     'settings' => 'admin_settings',
     'temples' => 'admin_temples',
     'users' => 'admin_users',
-    'artisans'=>'admin_artisans'
+    'artisans'=>'admin_artisans',
+    'messages'=> 'contact_messages'
   );
 
 $titlePage = array(
@@ -26,7 +26,8 @@ $titlePage = array(
     'settings' => 'Settings',
     'temples' => 'Manage Temples',
     'users' => 'Manage Users',
-    'artisans'=>'Manage Artisans'
+    'artisans'=>'Manage Artisans',
+    'messages'=>'Manage Messages'
 )
 ?>
 
@@ -74,10 +75,13 @@ $titlePage = array(
                 <li><a href="?page=posts">Manage Posts</a></li>
                 <li><a href="?page=temples">Manage Temples</a></li>
                 <li><a href="?page=artisans">Manage Artisans</a></li>
-                <?php if(is_admin()) {?>
+                <?php if(is_admin()):?>
+                    <li><a href="?page=messages">Manage Messages</a></li>
                 <li><a href="?page=users">Manage Users</a></li>
-                <?php } ?>
+                
                 <li><a href="?page=settings">Settings</a></li>
+                <?php endif; ?>
+                <li><a href="../index?page=home" target="_blank">Website</a></li>
                 <li><a href="logout">Logout</a></li>
             </ul>
         </nav>
@@ -145,13 +149,50 @@ $titlePage = array(
                 var user = <?php
                     $db->query("SELECT * FROM users WHERE id = $edit");
                     echo json_encode($db->single()); ?>;
-            document.getElementById('user_id').value = user.id;
-            document.getElementById('username').value = user.username;
-            document.getElementById('email').value = user.email;
-            document.getElementById('role').value = user.role;
+                document.getElementById('user_id').value = user.id;
+                document.getElementById('username').value = user.username;
+                document.getElementById('email').value = user.email;
+                document.getElementById('role').value = user.role;
+            <?php elseif($page=="contact_messages" && $isedit): ?>
+                var msg = <?php
+                    $db->query("SELECT * FROM contact_messages WHERE id = $edit");
+                    echo json_encode($db->single()); ?>;
+                document.getElementById('message_id').value = msg.id;
+                document.getElementById('name').value = msg.name;
+                document.getElementById('email').value = msg.email;
+                document.getElementById('subject').value = msg.subject;
+                document.getElementById('message').value = msg.message;
             <?php endif; ?>
             
         <?php endif; ?>
+        Filevalidation = () => {
+            const fi = document.getElementById('featured_image');
+            // Check if any file is selected.
+            if (fi.files.length > 0) {
+                for (var i = 0; i <= fi.files.length - 1; i++) {
+
+                    const fsize = fi.files.item(i).size;
+                    const file = Math.round((fsize / 1024 /1024)*100)/100;
+                    // The size of the file.
+                    if (file >= 1.6) {
+                        document.getElementById("myForm").reset();
+                        alert(
+                            "File too Big, please select a file less than 1.5 MB");
+        
+                    } else {
+                        document.getElementById('size').innerHTML = 
+                          '<b>'+ file + '</b> MB';
+                    }
+                }
+            }
+        }
+        document.querySelectorAll("textarea").forEach((link)=>{
+            link.addEventListener('input', autoResize, false)
+        });
+        function autoResize() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        }
     </script>
 </body>
 </html>

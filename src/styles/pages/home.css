@@ -135,7 +135,7 @@
   margin: 0 auto;
 }
 
-.newsletter-form input {
+.newsletter-form input[type="email"] {
   flex-grow: 1;
   padding: var(--spacing-md) var(--spacing-lg);
   border-radius: var(--radius-md) 0 0 var(--radius-md);

@@ -10,22 +10,36 @@
 
 // Require admin login
 //require_admin();
+// Fetch current settings
 
+$site_name = get_setting('site_name');
+$contact_email = get_setting('contact_email');
+$footer_text = get_setting('footer_text');
 // Handle form submission for updating settings
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $site_name = clean_input($_POST['site_name']);
-    $contact_email = clean_input($_POST['contact_email']);
-    $footer_text = clean_input($_POST['footer_text']);
+    $s = clean_input($_POST['site_name']);
+    $c = clean_input($_POST['contact_email']);
+    $f = clean_input($_POST['footer_text']);
+    if($site_name =='' && $contact_email ==''  && $footer_text ==''){
+        
+        create_setting('site_name',$s);
+        create_setting('contact_email',$c);
+        create_setting('footer_text',$f);
+        flash_message('Settings updated successfully.', 'success');
+    }else{
+        
+        
+        // Update settings in the database
+        update_setting('site_name', $s);
+        update_setting('contact_email', $c);
+        update_setting('footer_text', $f);
+        flash_message('Settings updated successfully.', 'success');
+    }
+    
 
-    // Update settings in the database
-    update_setting('site_name', $site_name);
-    update_setting('contact_email', $contact_email);
-    update_setting('footer_text', $footer_text);
-
-    flash_message('Settings updated successfully.', 'success');
+    
 }
 
-// Fetch current settings
 $site_name = get_setting('site_name');
 $contact_email = get_setting('contact_email');
 $footer_text = get_setting('footer_text');

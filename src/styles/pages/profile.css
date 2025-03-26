@@ -1,0 +1,46 @@
+
+  .user form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user form div {
+    margin-bottom: 15px;
+  }
+  
+  .user form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .user form input[type="text"],
+  form input[type="email"],
+  form input[type="password"],
+  form input[type="file"],
+  form textarea,
+  form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .user form textarea {
+    resize: vertical;
+  }
+  
+  /* .user form .button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  
+  .user form .button:hover {
+    background-color: #555;
+  } */

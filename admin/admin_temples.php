@@ -13,15 +13,17 @@
 
 // Database connection
 $db = new Database();
-
 // Handle form submission for creating/updating temples
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = clean_input($_POST['name']);
     $location = clean_input($_POST['location']);
     $description = clean_input($_POST['description']);
     $history = clean_input($_POST['history']);
-    $featured_image = !empty($_FILES['featured_image']['name']) ? upload_image($_FILES['featured_image']) : '';
-    
+    //$featured_image = !empty($_FILES['featured_image']['name']) ? upload_image($_FILES['featured_image']) : '';
+    $featured_image = '';
+    if(!empty($_FILES['featured_image']['name'])){
+        $featured_image = base64_encode(file_get_contents(addslashes($_FILES['featured_image']['tmp_name'])));
+    }
     if (isset($_POST['temple_id']) && $_POST['temple_id'] != '') {
         // Update existing temple
         $temple_id = clean_input($_POST['temple_id']);
@@ -47,13 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->bind(':description', $description);
         $db->bind(':history', $history);
         $db->bind(':featured_image', $featured_image);
+        
     }
     if ($db->execute()) {
-        
+        // $temple_last_id = $db->lastInsertId();
+        // $db->query("INSERT INTO temple_images (`temple_id`,`image_path`,`caption`,`blob_image`,`created_at`) VALUES (:temple_id,:image_path,:caption,'$image',NOW())");
+        // $db->bind(':temple_id',$temple_last_id);
+        // $db->bind(':image_path','upload');
+        // $db->bind(':caption','Test');
+        // if($db->execute()){
+        //     header('location: ?page=temples&status=success');
+        // }
         header('location: ?page=temples&status=success');
     } else {
         header('location: ?page=temples&status=error_create');
     }
+    
     exit;
 }
 
@@ -77,8 +88,8 @@ $temples = $db->resultSet();
 
  
         <h2>Create/Edit Temple</h2>
-        <?php include '../includes/status.php'; ?>
-        <form method="post" enctype="multipart/form-data">
+        <?php include '../includes/status.php';?>
+        <form method="post" enctype="multipart/form-data" id="myForm">
             <input type="hidden" name="temple_id" id="temple_id">
             <div>
                 <label for="name">Name:</label>
@@ -97,8 +108,8 @@ $temples = $db->resultSet();
                 <textarea id="history" name="history"></textarea>
             </div>
             <div>
-                <label for="featured_image">Featured Image:</label>
-                <input type="file" id="featured_image" name="featured_image">
+                <label for="featured_image">Featured Image:</label><p id="size"></p>
+                <input type="file" id="featured_image" name="featured_image" accept="image/x-png, image/jpeg" onchange=Filevalidation()>
             </div>
             <div>
                 <button type="submit">Save Temple</button>
@@ -121,7 +132,10 @@ $temples = $db->resultSet();
                         <td><?php echo $temple['location']; ?></td>
                         <td>
                             <a href="?page=temples&edit=<?php echo $temple['id']; ?>">Edit</a>
-                            <a href="?page=temples&delete=<?php echo $temple['id']; ?>" onclick="return confirm('Are you sure you want to delete this temple?');">Delete</a>
+                            <?php if(is_admin()):?>
+                            <a href="?page=temples&delete=<?php echo $temple['id']; ?>" 
+                            onclick="return confirm('Are you sure you want to delete this temple?');">Delete</a>
+                            <?php endif;?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

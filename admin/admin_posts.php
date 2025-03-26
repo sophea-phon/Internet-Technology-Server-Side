@@ -97,7 +97,10 @@ $posts = $db->resultset();
                         <td><?php echo ucfirst($post['status']); ?></td>
                         <td>
                             <a href="?page=posts&edit=<?php echo $post['id']; ?>">Edit</a>
+                            <?php if(is_admin()): ?>
                             <a href="?page=posts&delete=<?php echo $post['id']; ?>" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
+                                <?php endif; ?>
+                        
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -15,6 +15,9 @@ $artisans_count = $db->single()['count'];
 
 $db->query("SELECT COUNT(*) AS count FROM users");
 $users_count = $db->single()['count'];
+
+$db->query("SELECT COUNT(*) AS count FROM contact_messages WHERE status='new'");
+$message_count = $db->single()['count'];
 ?>
 
 
@@ -35,7 +38,13 @@ $users_count = $db->single()['count'];
                 <p><?php echo $artisans_count; ?></p>
             </div>
             <div class="card">
+                <h3>Total New Message</h3>
+                <p><?php echo $message_count; ?></p>
+            </div>
+            <?php if(is_admin()) :?>
+            <div class="card">
                 <h3>Total Users</h3>
                 <p><?php echo $users_count; ?></p>
             </div>
+            <?php endif;?>
         </div>

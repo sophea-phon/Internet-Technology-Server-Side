@@ -19,8 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $user = $db->single();
     if(login_user($username,$password)){
-        header('location: index');
-        exit;
+        
+        if(!is_admin()){
+            header('location: ../index?page=home');
+            exit;
+        }else{
+            header('location: index?page=dashboard');
+            exit;
+        } 
     }else{
         $error_message = 'Invalid username or password.';
     }

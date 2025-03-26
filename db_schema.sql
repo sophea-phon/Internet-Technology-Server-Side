@@ -22,7 +22,7 @@ CREATE TABLE temples (
     location VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
     history TEXT,
-    featured_image VARCHAR(255),
+    featured_image LONGBLOB,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -44,7 +44,7 @@ CREATE TABLE artisans (
     craft_type VARCHAR(100) NOT NULL,
     location VARCHAR(100) NOT NULL,
     bio TEXT NOT NULL,
-    featured_image VARCHAR(255),
+    featured_image LONGBLOB,
     contact_info VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -106,6 +106,14 @@ CREATE TABLE contact_messages (
     subject VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
     status ENUM('new', 'read', 'replied') DEFAULT 'new',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Contact messages
+CREATE TABLE email (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

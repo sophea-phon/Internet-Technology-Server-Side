@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = clean_input($_POST['username']);
     $password = password_hash(clean_input($_POST['password']), PASSWORD_BCRYPT);
     $email = clean_input($_POST['email']);
-    $role = 'user'; // Default role
+    $role = 'editor'; // Default role
 
     // Insert user into database
     global $db;

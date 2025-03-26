@@ -116,17 +116,45 @@ function initFormValidation(form) {
 
         submitButton.disabled = true;
         submitButton.textContent = "Sending...";
-
-        // Simulate API call
-        setTimeout(() => {
-          form.reset();
-          submitButton.textContent = "Sent Successfully!";
-
+        
+        
+        if(form.getAttribute("name") == "contact"){
+          const formData = new FormData();
+          formData.append('name', form.elements.namedItem("name").value);
+          formData.append('email',form.elements.namedItem("email").value);
+          formData.append('subject',form.elements.namedItem("subject").value);
+          formData.append('message',form.elements.namedItem("message").value);
+          const xhttp = new XMLHttpRequest();
+          xhttp.onload = function() {
+            if(this.responseText){
+                    // Simulate API call
+                    setTimeout(() => {
+                      form.reset();
+                      submitButton.textContent = "Sent Successfully!";
+      
+                      setTimeout(() => {
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalText;
+                      }, 2000);
+                    }, 1500);
+                  }
+          }
+          xhttp.open("POST", "src/php/contact.php",true);
+          xhttp.send(formData);
+        }
+        else{
+          // Simulate API call
           setTimeout(() => {
-            submitButton.disabled = false;
-            submitButton.textContent = originalText;
-          }, 2000);
-        }, 1500);
+            form.reset();
+            submitButton.textContent = "Sent Successfully!";
+
+            setTimeout(() => {
+              submitButton.disabled = false;
+              submitButton.textContent = originalText;
+            }, 2000);
+          }, 1500);
+        }
+        
       }
     }
   });

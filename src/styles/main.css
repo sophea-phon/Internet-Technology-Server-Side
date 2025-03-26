@@ -20,3 +20,15 @@
 @import "pages/contact.css";
 @import "pages/temples.css";
 @import "pages/artisans.css";
+@import "pages/profile.css";
+
+.three-lines-text{
+    text-overflow: ellipsis;
+      overflow: hidden;
+      line-height: 20px;
+      max-height: 100px;
+      display: -webkit-box;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+  }
