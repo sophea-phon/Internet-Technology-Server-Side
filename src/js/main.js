@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize smooth scrolling for anchor links
   initSmoothScroll();
 
+  initNavLink();
   // Initialize form validation if forms exist
   const forms = document.querySelectorAll("form");
   if (forms.length > 0) {
@@ -39,7 +40,17 @@ function initMobileMenu() {
     });
   });
 }
+function initNavLink(){
+  const navLink = document.querySelectorAll(".nav-link");
+  const windowPathname = window.location.search;
 
+  navLink.forEach(navLinkEl=>{
+    const navLinkPathname = navLinkEl.getAttribute('href');
+    if(windowPathname == navLinkPathname){
+      navLinkEl.classList.add("active");
+    }
+  });
+}
 // Header scroll effect
 function initHeaderScroll() {
   const header = document.querySelector(".header");

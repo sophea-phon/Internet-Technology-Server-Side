@@ -74,7 +74,7 @@ $db = new Database();
             <nav class="navbar">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="?page=home" class="nav-link active">Home</a>
+                        <a href="?page=home" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item">
                         <a href="?page=temples" class="nav-link">Temples</a>
