@@ -1,6 +1,6 @@
 <?php
 // Fetch all news/posts
-$db->query("SELECT * FROM posts ORDER BY created_at DESC");
+$db->query("SELECT * FROM posts WHERE status='published' ORDER BY created_at DESC");
 $posts = $db->resultSet();
 ?>
 

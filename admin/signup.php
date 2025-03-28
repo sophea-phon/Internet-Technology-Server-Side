@@ -21,14 +21,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db->bind(':password', $password);
     $db->bind(':email', $email);
     $db->bind(':role', $role);
-
-    if ($db->execute()) {
-        // Redirect to login page
-        header('Location: login.php');
-        exit;
-    } else {
-        $error_message = 'Error creating account. Please try again.';
+    
+    try{
+        if ($db->execute()) {
+            // Redirect to login page
+            header('Location: login.php');
+            exit;
+        } else {
+            header('location: signup?status=error');
+        }
+    }catch(PDOException $e){
+        if ($e->getCode() == 23000) {
+            header('location: signup?status=duplicate');
+        }else{
+            header('location: signup?status=error');
+        }
+        
     }
+    
 }
 ?>
 
@@ -43,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div>
     <h1>Signup</h1>
-    <?php if (isset($error_message)): ?>
-        <div class="error"><?php echo $error_message; ?></div>
-    <?php endif; ?>
+    <div style="margin-bottom:0.5em; text-align:center;">
+        <?php include '../includes/status.php'; ?>
+    </div>
     <form action="signup.php" method="post">
         <div>
             <label for="username">Username:</label>

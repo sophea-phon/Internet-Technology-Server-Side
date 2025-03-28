@@ -4,6 +4,9 @@ if(isset($_GET['id']) && $_GET['id'] != ''){
     $id = $_GET['id'];
     $db->query("SELECT * FROM temples WHERE id = $id");
     $temple =  $db->single();
+    if($temple == null || empty($temple)){
+        header('location: ?page=temples');
+    }
 }
 ?>
         <!-- Temple Details Hero Section -->

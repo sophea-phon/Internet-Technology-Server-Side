@@ -4,6 +4,9 @@ if(isset($_GET['id']) && $_GET['id'] != ''){
     $id = $_GET['id'];
     $db->query("SELECT * FROM artisans WHERE id = $id");
     $artisan =  $db->single();
+    if($artisan == null || empty($artisan)){
+        header('location: ?page=artisans');
+    }
 }
 ?>
 

@@ -4,6 +4,9 @@ if(isset($_GET['id']) && $_GET['id'] != ''){
     $id = $_GET['id'];
     $db->query("SELECT * FROM posts WHERE id = $id");
     $post =  $db->single();
+    if($post == null || empty($post)){
+        header('location: ?page=news');
+    }
 }
 ?>
 

@@ -44,9 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('location: ?page=users&status=error_create');
         }
     }catch(PDOException $e){
-        if ($e->errorInfo[1] == 1062) {
+        if ($e->getCode() == 23000) {
             header('location: ?page=users&status=duplicate');
+        }else{
+            header('location: ?page=users&status=error');
         }
+        
     }
     
     //header('Location: admin_users.php');
